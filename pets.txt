@@ -1,0 +1,12 @@
+Oscar
+cat
+1
+3
+Ozzi
+cat
+10
+4
+Tracy
+dog
+2
+4
