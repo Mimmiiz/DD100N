@@ -1,0 +1,14 @@
+1
+Stockholm
+Göteborg
+14:00
+18:00
+1
+250.00
+2
+Stockholm
+Eskilstuna
+12:00
+13:00
+2
+100.00
