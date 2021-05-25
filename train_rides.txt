@@ -1,14 +1,15 @@
 1
 Stockholm
 Göteborg
+SJ Snabbtåg
 2021
 5
-25
+26
 14
 30
 2021
 5
-25
+26
 18
 0
 1
@@ -16,6 +17,7 @@ Göteborg
 2
 Stockholm
 Eskilstuna
+SJ Mälartåg
 2021
 5
 26

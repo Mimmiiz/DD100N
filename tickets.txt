@@ -1,7 +1,27 @@
 ********************
 PLATSBILJETT
+Stockholm -> Göteborg
+SJ Snabbtåg
+Avg. tid: 2021-05-26 14:30
+Ank. tid: 2021-05-26 18:00
+Tågnummer: 1
+Tågresenummer: 1	Tågnamn: X2000
+Plats: 3	Vagn: 1
+********************
 PLATSBILJETT
 Stockholm -> Göteborg
-Avg. tid: 14:00
-Ank. tid: 18:00
-Tåg: 1	Plats: 13
+SJ Snabbtåg
+Avg. tid: 2021-05-26 14:30
+Ank. tid: 2021-05-26 18:00
+Tågnummer: 1
+Tågresenummer: 1	Tågnamn: X2000
+Plats: 4	Vagn: 1
+********************
+PLATSBILJETT
+Stockholm -> Eskilstuna
+SJ Mälartåg
+Avg. tid: 2021-05-26 12:00
+Ank. tid: 2021-05-26 13:00
+Tågnummer: 2
+Tågresenummer: 2	Tågnamn: X40
+Plats: 2	Vagn: 1
