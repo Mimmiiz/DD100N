@@ -177,7 +177,7 @@ class TrainCart:
         Parameters: self
         Returns: A string that represents the train cart"""
         rows = math.ceil(len(self.seats) / 4)
-        repr = "┏"
+        repr = "VAGN " + str(self.train_cart_number) + "┏"
         line = ""
         for i in range(0, rows):
             line = line + "━━━━"
@@ -453,31 +453,38 @@ def train_ticket_menu(train_ride, train):
     Parameters: train_ride (a TrainRide object), train (a Train object)
     Return: nothing"""
 
-    menu_choices = ("Vad vill du göra?\nBoka, skriv 'B', på samma rad följt av önskat antal biljetter (exempel B 2).\n" +
+    menu_choices = ("Vad vill du göra?\nByt vagn, skriv 'V'\nBoka, skriv 'B', på samma rad följt av önskat antal biljetter (exempel B 2).\n" +
         "Avboka, skriv 'A', på samma rad följt av ett platsnummer (exempel A 10).\n" + 
         "Skriv ut de senaste bokade biljetterna, skriv 'S'.\nAvsluta, skriv Q.")
     tickets = []
+    train_cart = train.train_carts[0]
     print(menu_choices)
-     # hårdkordat värde för test
-    cart = train.train_carts[0]
-    print(cart)
-    user_input = get_input(cart)
+    print(train_cart)
+    user_input = get_input(train_cart)
     
     while user_input != 'Q':
-        if user_input[0] == 'B':
-            tickets = tickets + book_tickets(int(user_input[2:]), cart, train_ride)
+        if user_input == 'V':
+            change_train_cart(train)
+        elif user_input[0] == 'B':
+            tickets = tickets + book_tickets(int(user_input[2:]), train_cart, train_ride)
             print("")
         elif user_input[0] == 'A':
             try:
-                cart.cancel_booked_seat(int(user_input[2:]))
+                train_cart.cancel_booked_seat(int(user_input[2:]))
             except IndexError:
                 print("Det angivna platsnumret är ogiltigt, försök igen.")
             print("")
         elif user_input == 'S':  
             print_tickets("tickets.txt", tickets)
         print(menu_choices)
-        print(cart)
-        user_input = get_input(cart)
+        print(train_cart)
+        user_input = get_input(train_cart)
+
+def change_train_cart(train):
+    """
+    Parameters: train (a Train object)
+    Return: train_cart (a Train cart object)"""
+    user_input = get_input()
 
 def train_ride_choice_menu(train_ride_list, trains):
     """Displays a train ride choice menu to the user.
@@ -513,7 +520,7 @@ def get_input(train):
     while True:
         try:
             user_input = input("Ange ett val: ")
-            if user_input == 'S' or user_input == 'Q':
+            if user_input == 'S' or user_input == 'Q' or user_input == 'V':
                 break
             elif re.match("^B\s[0-9]+$|^A\s[0-9]+$", user_input):
                 if int(user_input[2:]) <= 0 or int(user_input[2:]) > len(train.seats):
@@ -543,8 +550,9 @@ def is_integer(val):
 def main():
     trains = read_train_file("trains.txt")
     train_ride_list = read_train_ride_file("train_rides.txt")
-    print(str(train_ride_list))
-    train_ride_choice_menu(train_ride_list, trains)
+    print(trains[0].train_carts[0])
+    #print(str(train_ride_list))
+    #train_ride_choice_menu(train_ride_list, trains)
 
     """The main function
     Algorithm:
