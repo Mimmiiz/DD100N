@@ -1,7 +1,7 @@
 # Titel: Platsbokning på SJ
 # Uppgifts nr: 127
 # Författare: Maria Halvarsson
-# Datum: 2021-05-25
+# Datum: 2021-06-06
 #
 # This program helps with ticket booking on SJ trains.
 # The screen will display an image of how the train looks like
@@ -18,18 +18,18 @@ import datetime
 
 # A class that defines a ticket
 #   seat - the booked seat, Seat object
-#   train_ride - the booked train ride, TrainRide object
+#   train_route - the booked train route, TrainRoute object
 #   train_cart - the train cart that has the booked seat, TrainCart object
 #   train - a Train object
 
 class Ticket:
 
-    def __init__(self, seat, train_ride, train_cart, train):
+    def __init__(self, seat, train_route, train_cart, train):
         """Creates a new ticket.
-        Parameters: self, seat (Seat object), train_ride (TrainRide object), train_cart (TrainCart object), train (Train object)
+        Parameters: self, seat (Seat object), train_route (TrainRoute object), train_cart (TrainCart object), train (Train object)
         Return: nothing"""
         self.seat = seat
-        self.train_ride = train_ride
+        self.train_route = train_route
         self.train_cart = train_cart
         self.train = train
 
@@ -37,107 +37,107 @@ class Ticket:
         """Returns a string representation of a ticket.
         Parameters: self
         Return: A string representation of a ticket."""
-        repr = ("PLATSBILJETT\n" + str(self.train_ride) + "\tTågnamn: " + str(self.train.name) + "\nPlats: " + str(self.seat.seat_number) 
+        repr = ("PLATSBILJETT\n" + str(self.train_route) + "\tTågnamn: " + str(self.train.name) + "\nPlats: " + str(self.seat.seat_number) 
             + "\tVagn: " + str(self.train_cart.train_cart_number)) 
         return repr
 
-# A class that defines a train ride, contains all the train ride information
+# A class that defines a train route, contains all the train route information
 # such as departure and arrival time and departure location and destination.
-#   train_ride_number - the number of the train ride, integer
-#   departure_location - the departure location of the train ride, string
-#   destination - the destination of the trane ride (arrival location), string
+#   train_route_number - the number of the train route, integer
+#   departure_location - the departure location of the train route, string
+#   destination - the destination of the train route (arrival location), string
 #   departure_time - the departure time, datetime
 #   arrival_time - the arrival time, datetime
 #   train_number - the train number of the train, integer
-#   price - the price of the train ride, float
-#   type - the type of train ride, for instance express or regional, string
+#   price - the price of the train route, float
+#   train_route_type - the train route type, for instance express or regional, string
 
-class TrainRide:
+class TrainRoute:
 
-    def __init__(self, train_ride_number, departure_location, destination, departure_time, arrival_time, train_number, price, type):
-        """Creates a new train ride.
-        Parameters: self, train_ride_number (int), departure_location (string), destination (string), departure_time (datetime), 
-        arrival_time (datetime), train_number (int), price (float), type (string)
+    def __init__(self, train_route_number, departure_location, destination, departure_time, arrival_time, train_number, price, train_route_type):
+        """Creates a new train route.
+        Parameters: self, train_route_number (int), departure_location (string), destination (string), departure_time (datetime), 
+        arrival_time (datetime), train_number (int), price (float), train_route_type (string)
         Return: nothing"""
-        self.train_ride_number = train_ride_number
+        self.train_route_number = train_route_number
         self.departure_location = departure_location
         self.destination = destination
         self.departure_time = departure_time
         self.arrival_time = arrival_time
         self.train_number = train_number
         self.price = price
-        self.type = type
+        self.train_route_type = train_route_type
 
     def __repr__(self):
-        """Returns a string representation of a train ride.
+        """Returns a string representation of a train route.
         Parameters: self
-        Return: A string represenation of a train ride"""
-        repr = (self.departure_location + " -> " + self.destination + "\n" + self.type
+        Return: A string represenation of a train route"""
+        repr = (self.departure_location + " -> " + self.destination + "\n" + self.train_route_type
         + "\nAvg. tid: " + self.departure_time.strftime('%Y-%m-%d %H:%M') + "\nAnk. tid: " 
         + self.arrival_time.strftime('%Y-%m-%d %H:%M')
-        + "\nTågnummer: " + str(self.train_number) + "\nTågresenummer: " + str(self.train_ride_number))
+        + "\nTågnummer: " + str(self.train_number) + "\nTågresenummer: " + str(self.train_route_number))
         return repr
 
-# A class that contains a list of train rides to be able to store
-# multiple train rides.
-#   train_rides - a list of TrainRide objects
-class TrainRideList:
+# A class that contains a list of train routes to be able to store
+# multiple train routes.
+#   train_routes - a list of TrainRoute objects
+class TrainRouteList:
 
-    def __init__(self, train_rides):
-        """Creates a new train ride list
-        Parameters: self, train_rides (a list of TrainRide objects)
+    def __init__(self, train_routes):
+        """Creates a new train route list
+        Parameters: self, train_routes (a list of TrainRoute objects)
         Return: nothing"""
-        self.train_rides = train_rides
+        self.train_routes = train_routes
 
     def __repr__(self):
-        """Returns a string representation of the train ride list.
+        """Returns a string representation of the train route list.
         Parameters: self
         Return: repr (string)"""
         repr = ""
         i = 0
-        for train_ride in self.train_rides:
+        for train_route in self.train_routes:
             i += 1
-            repr = repr + str(i) + ".\n " + str(train_ride) + "\n" 
+            repr = repr + str(i) + ".\n" + str(train_route) + "\n\n" 
         return repr
 
-    def find_train_ride_number(self, train_ride_number):
-        """Searches for a train ride number.
-        Parameters: self, train_ride_number (int)
-        Return: found_train_ride (a train ride that matches the searched train ride number)"""
-        found_train_ride = None
-        for found_train_ride in self.train_rides:
-            if found_train_ride.train_ride_number == train_ride_number:
-                return found_train_ride
-        return found_train_ride
+    def find_train_route_number(self, train_route_number):
+        """Searches for a train route number.
+        Parameters: self, train_route_number (int)
+        Return: found_train_route (a train route that matches the searched train route number)"""
+        found_train_route = None
+        for found_train_route in self.train_routes:
+            if found_train_route.train_route_number == train_route_number:
+                return found_train_route
+        return found_train_route
 
     def find_train_number(self, train_number):
         """Searches for a train number.
         Parameters: self, train_number (int)
-        Return: found_train_ride (a train ride that matches the searched train ride number)"""
-        found_train_ride = None
-        for found_train_rider in self.train_rides:
-            if found_train_ride.train_number == train_number:
-                return found_train_ride
-        return found_train_ride
+        Return: found_train_route (a train route that matches the searched train route number)"""
+        found_train_route = None
+        for found_train_route in self.train_routes:
+            if found_train_route.train_number == train_number:
+                return found_train_route
+        return found_train_route
 
-    def get_train_ride_by_index(self, index):
-        """Searches for a train_ride in the list with the given index.
+    def get_train_route_by_index(self, index):
+        """Searches for a train_route in the list with the given index.
         Parameters: self, index (int)
-        Return: train_ride (a train ride in the list at the given index)"""
-        if index < 0 or index > (len(self.train_rides) - 1):
+        Return: train_route (a train route in the list at the given index)"""
+        if index < 0 or index > (len(self.train_routes) - 1):
             raise IndexError("The index is out of bounds.")
         else:
-            return self.train_rides[index]
+            return self.train_routes[index]
 
     def update(self):
-        """Updates the train ride list by deleting the train ride lists that has passed
+        """Updates the train route list by deleting the train route lists that has passed
         the current time and date.
         Parameters: self
         Return: nothing"""
-        for train_ride in self.train_rides:
+        for train_route in self.train_routes:
             i = 0
-            if train_ride.departure_time <= datetime.datetime.now():
-                del self.train_rides[i]
+            if train_route.departure_time <= datetime.datetime.now():
+                self.train_routes.remove(train_route)
             i += 1
 
 # A class that defines a train
@@ -202,6 +202,7 @@ class TrainCart:
 
     def number_of_available_seats(self):
         """Returns the number of available seats.
+        Calls function seat.is_available()
         Parameters: self
         Returns: available_seats (int)."""
         available_seats = 0
@@ -212,6 +213,7 @@ class TrainCart:
 
     def book_seat(self, seat_number):
         """Book a selected seat. Returns the booked Seat if booking is successful.
+        Calls function seat.is_available() and seat.book()
         Parameters: self, seat_number (int)
         Returns: booked_seat (a Seat)"""
         seat = self.get_seat(seat_number)
@@ -224,7 +226,7 @@ class TrainCart:
         return booked_seat
 
     def cancel_booked_seat(self, seat_number):
-        """Cancels a booked seat.
+        """Cancels a booked seat. Calls function seat.is_available() and seat.cancel()
         Parameters: self, seat_number (int)
         Returns: nothing"""
         seat = self.get_seat(seat_number)
@@ -288,6 +290,7 @@ class Seat:
 
 def read_train_file(file_name):
     """Reads from a file with the given file name and creates a new list of train objects.
+    Calls function read_seats_from_file(file)
     Parameter: file_name (string)
     Return: trains (a list of Train objects)"""
     file = open(file_name, "r")
@@ -304,10 +307,12 @@ def read_train_file(file_name):
             train_carts.append(TrainCart(int(train_cart_number), seats))
             file_input = file.readline().strip()
         trains.append(Train(int(train_number), train_name, train_carts))
+    file.close()
     return trains
 
 def write_train_file(file_name, trains):
     """Writes the trains to a file with the fiven file name.
+    Calls function write_seats_to_file(file, seats)
     Parameters: file_name (string), trains (a list of Train objects)
     Return: nothing"""
     file = open(file_name, "w")
@@ -346,41 +351,44 @@ def write_seats_to_file(file, seats):
         file.write(str(seat.seat_number) + "\n")
         file.write(str(seat.is_booked) + "\n")
 
-def read_train_ride_file(file_name):
-    """Reads from a file and creates a TrainRideList object from the given input.
+def read_train_route_file(file_name):
+    """Reads from a file and creates a TrainRouteList object from the given input.
+    Calls function read_datetime_from_file(file).
     Parameter: file_name (string)
-    Return: train_ride_list (a TrainRideList object)"""
+    Return: train_route_list (a TrainRouteList object)"""
     file = open(file_name, "r", encoding="utf-8")
-    train_rides = []
-    train_ride_number = file.readline().strip()
-    while train_ride_number != "" :
+    train_routes = []
+    train_route_number = file.readline().strip()
+    while train_route_number != "" :
         departure_location = file.readline().strip()
         destination = file.readline().strip()
-        type = file.readline().strip()
+        train_route_type = file.readline().strip()
         departure_time = read_datetime_from_file(file)
         arrival_time = read_datetime_from_file(file)
         train_number = file.readline().strip()
         price = file.readline().strip()
-        train_rides.append(TrainRide(int(train_ride_number), departure_location, destination,
-            departure_time, arrival_time, int(train_number), float(price), type))
-        train_ride_number = file.readline().strip()
-    train_ride_list = TrainRideList(train_rides)
-    return train_ride_list
+        train_routes.append(TrainRoute(int(train_route_number), departure_location, destination,
+            departure_time, arrival_time, int(train_number), float(price), train_route_type))
+        train_route_number = file.readline().strip()
+    train_route_list = TrainRouteList(train_routes)
+    file.close()
+    return train_route_list
 
-def write_train_ride_file(file_name, train_ride_list):
-    """Write the train rides to the train ride file. 
-    Parameter: file_name(string), train_ride_list (a TrainRideList object)
+def write_train_route_file(file_name, train_route_list):
+    """Write the train routes to the train route file. 
+    Calls function write_datetime_to_file(file, date_time).
+    Parameter: file_name(string), train_route_list (a TrainRouteList object)
     Return: nothing"""
     file = open(file_name, "w", encoding="utf-8")
-    for train_ride in train_ride_list.train_rides:
-        file.write(str(train_ride.train_ride_number) + "\n")
-        file.write(train_ride.departure_location + "\n")
-        file.write(train_ride.destination + "\n")
-        file.write(train_ride.type + "\n")
-        write_datetime_to_file(file, train_ride.departure_time)
-        write_datetime_to_file(file, train_ride.arrival_time)
-        file.write(str(train_ride.train_number) + "\n")
-        file.write(str(train_ride.price) + "\n")
+    for train_route in train_route_list.train_routes:
+        file.write(str(train_route.train_route_number) + "\n")
+        file.write(train_route.departure_location + "\n")
+        file.write(train_route.destination + "\n")
+        file.write(train_route.train_route_type + "\n")
+        write_datetime_to_file(file, train_route.departure_time)
+        write_datetime_to_file(file, train_route.arrival_time)
+        file.write(str(train_route.train_number) + "\n")
+        file.write(str(train_route.price) + "\n")
 
 def read_datetime_from_file(file):
     """Reads the date and time from file and returns a datetime object.
@@ -416,9 +424,9 @@ def print_tickets(file_name, tickets):
             file.write(str(ticket) + "\n")
         file.close()
 
-def book_tickets(number_of_tickets, train, train_ride, train_cart):
+def book_tickets(number_of_tickets, train, train_route, train_cart):
     """Books the given number of tickets.
-    Parameters: number_of_tickets (int), train (a Train object), train_ride (a TrainRide object), train_cart (a TrainCart object)
+    Parameters: number_of_tickets (int), train (a Train object), train_route (a TrainRoute object), train_cart (a TrainCart object)
     Return: tickets (a list of Ticket objects)"""
     tickets = []
     for i in range(0, number_of_tickets):
@@ -436,7 +444,7 @@ def book_tickets(number_of_tickets, train, train_ride, train_cart):
                 if seat == None:
                     print("Ange ett annat platsnummer: ")
                 else:
-                    tickets.append(Ticket(seat, train_ride, train_cart, train))
+                    tickets.append(Ticket(seat, train_route, train_cart, train))
                     break
             except IndexError:
                 print("Vänligen ange ett korrekt platsnummer: ")
@@ -444,16 +452,17 @@ def book_tickets(number_of_tickets, train, train_ride, train_cart):
         print(train_cart)
     return tickets
 
-def train_ticket_menu(train_ride, train):
+def train_ticket_menu(train_route, train):
     """Displays the train ticket menu to the user.
-    Parameters: train_ride (a TrainRide object), train (a Train object)
+    Parameters: train_route (a TrainRoute object), train (a Train object)
     Return: tickets (a list of Ticket objects)"""
 
-    menu_choices = ("Vad vill du göra?\nByt vagn, skriv 'V'\nBoka, skriv 'B', på samma rad följt av önskat antal biljetter (exempel B 2).\n" +
-        "Avboka, skriv 'A', på samma rad följt av ett platsnummer (exempel A 10).\nGå tillbaka till huvudmeny, skriv 'H'.")
+    menu_choices = ("\nVad vill du göra?\nByt vagn, skriv 'V'\nBoka, skriv 'B', på samma rad följt av önskat antal biljetter (exempel B 2).\n" +
+        "Avboka, skriv 'A', på samma rad följt av ett platsnummer (exempel A 10).\nGå tillbaka till huvudmeny, skriv 'H'.\n")
     train_cart = train.train_carts[0]
     tickets = []
     print(menu_choices)
+    print("Bokade platser markeras med * *")
     print(train_cart)
     user_input = get_input(train_cart)
     
@@ -461,7 +470,7 @@ def train_ticket_menu(train_ride, train):
         if user_input == 'V':
             train_cart = change_train_cart(train, train_cart)
         elif user_input[0] == 'B':
-            tickets = tickets + (book_tickets(int(user_input[2:]), train, train_ride, train_cart))
+            tickets = tickets + (book_tickets(int(user_input[2:]), train, train_route, train_cart))
             print("")
         elif user_input[0] == 'A':
             try:
@@ -474,20 +483,21 @@ def train_ticket_menu(train_ride, train):
         user_input = get_input(train_cart)
     return tickets
 
-def main_menu(train_ride_list, trains):
-    """Displays the main menu to the user which offers different choices such as choosing train ride and printing tickets.
-    Parameters: train_ride_list (a TrainRideList object), trains (a list of Trains)
+def main_menu(train_route_list, trains):
+    """Displays the main menu to the user which offers different choices such as choosing train route and printing tickets.
+    Parameters: train_route_list (a TrainRouteList object), trains (a list of Trains)
     Returns: nothing"""
-    menu_choices = ("Vad vill du göra?\nFör att välja tågresa, skriv 'T'\nSkriv ut de senaste bokade biljetterna, skriv 'S'.\nAvsluta, skriv Q.")
+    menu_choices = ("Vad vill du göra?\nVälja tågresa, skriv 'T'\nSkriv ut de senaste bokade biljetterna, skriv 'S'.\nAvsluta, skriv Q.")
     tickets = []
     print(menu_choices)
     user_input = input("Ange ett val: ")
     
     while user_input != 'Q':
         if user_input == 'T':
-            tickets = tickets + train_ride_choice_menu(train_ride_list, trains)
+            tickets = tickets + train_route_choice_menu(train_route_list, trains)
         elif user_input == 'S':
             print_tickets("tickets.txt", tickets)
+            print("Biljetterna har skrivits ut till filen 'tickets.txt'.")
         else:
             print("Vänligen ange ett giltigt val.")
         print("\n" + menu_choices)
@@ -504,22 +514,22 @@ def change_train_cart(train, cart):
         if train_cart.train_cart_number == number + 1:
             return train_cart
 
-def train_ride_choice_menu(train_ride_list, trains):
-    """Displays a train ride choice menu to the user.
-    Parameters: train_ride_list (TrainRideList object), trains (a list of Trains)
+def train_route_choice_menu(train_route_list, trains):
+    """Displays a train route choice menu to the user.
+    Parameters: train_route_list (TrainRouteList object), trains (a list of Trains)
     Return: tickets (a list of Ticket objects)"""
     tickets = []
     while True:
-        print("TILLGÄNGLIGA TÅGRESOR: \n" + str(train_ride_list))
+        print("\nTILLGÄNGLIGA TÅGRESOR: \n" + str(train_route_list))
         user_input = input("Ange numret för vilken tågresa du vill boka eller avboka: ")
         if is_integer(user_input):
-            if int(user_input) < 1 or int(user_input) > len(train_ride_list.train_rides):
-                print("Det angivna värdet måste vara mellan 1 och " + str(len(train_ride_list.train_rides)))
+            if int(user_input) < 1 or int(user_input) > len(train_route_list.train_routes):
+                print("Det angivna värdet måste vara mellan 1 och " + str(len(train_route_list.train_routes)))
             else:
                 index = int(user_input) - 1
-                train_ride = train_ride_list.get_train_ride_by_index(index)
-                train = get_train(trains, train_ride.train_number)
-                tickets = train_ticket_menu(train_ride, train)
+                train_route = train_route_list.get_train_route_by_index(index)
+                train = get_train(trains, train_route.train_number)
+                tickets = train_ticket_menu(train_route, train)
                 break
         else:
             print("Vänligen ange ett giltigt värde.")
@@ -539,7 +549,7 @@ def get_input(train):
     Return: user_input (string)"""
     while True:
         try:
-            user_input = input("Ange ett val: ")
+            user_input = input("Ange ett val: ").capitalize()
             if user_input == 'V' or user_input == 'H':
                 break
             elif re.match("^B\s[0-9]+$|^A\s[0-9]+$", user_input):
@@ -550,9 +560,9 @@ def get_input(train):
                 else:
                     break
             else:
-                print("Vänligen ange ett giltigt val.")
+                print("Vänligen ange ett giltigt val som beskrivet ovan.")
         except IndexError or AttributeError:
-                print("Vänligen ange ett giltigt val.")
+                print("Vänligen ange ett giltigt val som beskrivet ovan.")
     
     return user_input
 
@@ -581,12 +591,12 @@ def main():
     Parameters: none
     Returns: nothing
     """
-    print("Välkommen till SJ:s platsbokning.")
+    print("Välkommen till SJ:s platsbokning.\n")
     trains = read_train_file("trains.txt")
-    train_ride_list = read_train_ride_file("train_rides.txt")
-    train_ride_list.update()
-    main_menu(train_ride_list, trains)
+    train_route_list = read_train_route_file("train_routes.txt")
+    train_route_list.update()
+    main_menu(train_route_list, trains)
     write_train_file("trains.txt", trains)
-    write_train_ride_file("train_rides.txt", train_ride_list)
+    write_train_route_file("train_routes.txt", train_route_list)
 
 main()
