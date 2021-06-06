@@ -134,11 +134,13 @@ class TrainRouteList:
         the current time and date.
         Parameters: self
         Return: nothing"""
+        updated_train_routes = []
         for train_route in self.train_routes:
             i = 0
-            if train_route.departure_time <= datetime.datetime.now():
-                self.train_routes.remove(train_route)
+            if train_route.departure_time > datetime.datetime.now():
+                updated_train_routes.append(train_route)
             i += 1
+        self.train_routes = updated_train_routes
 
 # A class that defines a train
 # train_number - int
